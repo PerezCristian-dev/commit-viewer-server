@@ -27,7 +27,11 @@ export class CommitsService {
       authorizationHeader,
     );
 
-    const comments = await this.getAllComments(userName, repoName);
+    const comments = await this.getAllComments(
+      userName,
+      repoName,
+      authorizationHeader,
+    );
 
     let commitsArray: Array<CommitResponse> = [];
     if (commits) {
@@ -69,8 +73,8 @@ export class CommitsService {
     };
   }
 
-  async getAllComments(userName: string, repoName: string) {
-    return await this.githubService.getComments(userName, repoName);
+  async getAllComments(userName: string, repoName: string, auth?: string) {
+    return await this.githubService.getComments(userName, repoName, auth);
   }
 
   async getOneComment(userName: string, repoName: string, commentId: string) {

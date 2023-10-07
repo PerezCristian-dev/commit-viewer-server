@@ -34,10 +34,13 @@ export class GithubService {
     }
   }
 
-  async getComments(username: string, repo: string) {
+  async getComments(username: string, repo: string, auth?: string) {
     const url = `${this.githubApiBaseUrl}/repos/${username}/${repo}/comments`;
     try {
-      const response = await axios.get(url, { headers: this.headers });
+      const headers = { Authorization: auth };
+      const response = await axios.get(url, {
+        headers: headers || this.headers,
+      });
       return response.data;
     } catch (error) {
       console.error({

@@ -10,8 +10,15 @@ import {
   Headers,
 } from '@nestjs/common';
 import { CommitsService } from './commits.service';
-import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiResponse,
+  ApiOperation,
+  ApiProperty,
+  ApiPropertyOptional,
+} from '@nestjs/swagger';
 import { CreateCommentDto, UpdateCommentDto } from './dto';
+import { IsOptional } from 'class-validator';
 
 @Controller('commits')
 @ApiTags('commits')
@@ -25,11 +32,17 @@ export class CommitsController {
   getAllCommits(
     @Param('username') userName: string,
     @Param('reponame') repoName: string,
-    @Query('offset') offset: number,
-    @Query('limit') limit: number,
-    @Headers('authorization') authorizationHeader: string,
+    @Query('offset') offset?: number,
+    @Query('limit') limit?: number,
+    @Headers('authorization') auth?: string,
   ) {
-    return this.commitsService.getAllCommits(userName, repoName, offset, limit, authorizationHeader);
+    return this.commitsService.getAllCommits(
+      userName,
+      repoName,
+      offset,
+      limit,
+      auth,
+    );
   }
 
   @Get('comments/:username/:reponame')
@@ -39,8 +52,9 @@ export class CommitsController {
   getAllComments(
     @Param('username') userName: string,
     @Param('reponame') repoName: string,
+    @Headers('authorization') auth?: string,
   ) {
-    return this.commitsService.getAllComments(userName, repoName);
+    return this.commitsService.getAllComments(userName, repoName, auth);
   }
 
   @Get('comments/:username/:reponame/:commentId')
