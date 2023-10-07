@@ -36,15 +36,17 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
-
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
+
+
+## Swagger UI
+
+You can access the methods available on this API at:
+(http://localhost:8080/api/swagger#/)
+Make sure the API is running.
+
 
 ## Test
 
